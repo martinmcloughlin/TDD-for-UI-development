@@ -12,9 +12,10 @@ No Code is written for a function without
 
 Then we write the code, test, refactor, test again (rinse and repeat as needed).
 
-### example
+example
+-------
 
-Log in form
+### Log in form
 
 #### Master requirement
 
