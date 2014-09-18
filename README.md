@@ -11,4 +11,4 @@ No Code is written for a function without
 1. defining a test
 2. making that test fail
 
-Please use the wiki for full documentation
+[Please use the wiki for full documentation](https://github.com/martinmcloughlin/TDD-for-UI-development/wiki)
