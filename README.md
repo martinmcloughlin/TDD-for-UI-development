@@ -37,20 +37,36 @@ Form must contain
 * Test button exists
 * Test link exists
 
-#### Extend requirements
+#### Extended requirements
 
 ##### Detail
 
 Form
 * must have id="masterSignIn"
+* must have valid action
 Email address field
 * must be type="email"
+* must have 'hint' text placeholder
+* must validate inline on loss of focus
 Password field
 * must be type="password"
+* must have 'hint' text placeholder
 Checkbox
 * must be unchecked by default
 Submit button
 * must trigger form submission
+* must validate form elements on submit
 Reminder link
 * must be simple href / text link
 * must link to reminder page
+
+##### Tests
+
+* Test form ID
+* Test form action exists
+* Test email field for type
+* Test email field for placeholder
+* Test email field for validation on focus loss
+* Test password field for type
+* Test password field for placeholder
+* Test password field for validation on focus loss
