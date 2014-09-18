@@ -7,9 +7,8 @@ Basic Principles
 ----------------
 
 No Code is written for a function without
-* first - defining a test
-* second - making that test fail
 
-Then we write the code, test, refactor, test again (rinse and repeat as needed).
+1. defining a test
+2. making that test fail
 
 Please use the wiki for full documentation
