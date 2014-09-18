@@ -12,11 +12,11 @@ No Code is written for a function without
 
 ### example
 
-#### Master requirement
-
 Log in form
 
-#### Detail
+#### Master requirement
+
+##### Detail
 
 Form must contain
 * email address field
@@ -25,11 +25,34 @@ Form must contain
 * submit button
 * link to password reminder
 
-#### Tests
+##### Tests
 
-Test form exists
-Test email field exists
-Test password field exists
-Test checkbox exists
-Test button exists
-Test link exists
+* Test form exists
+* Test email field exists
+* Test password field exists
+* Test checkbox exists
+* Test button exists
+* Test link exists
+
+#### Extend requirements
+
+##### Detail
+
+Form
+* must have id="masterSignIn"
+
+Email address field
+* must be type="email"
+
+Password field
+* must be type="password"
+
+Checkbox
+* must be unchecked by default
+
+Submit button
+* must trigger form submission
+
+Reminder link
+* must be simple href / text link
+* must link to reminder page
