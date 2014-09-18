@@ -10,6 +10,8 @@ No Code is written for a function without
 * first - defining a test
 * second - making that test fail
 
+Then we write the code, test, refactor, test again (rinse and repeat as needed).
+
 ### example
 
 Log in form
@@ -40,19 +42,14 @@ Form must contain
 
 Form
 * must have id="masterSignIn"
-
 Email address field
 * must be type="email"
-
 Password field
 * must be type="password"
-
 Checkbox
 * must be unchecked by default
-
 Submit button
 * must trigger form submission
-
 Reminder link
 * must be simple href / text link
 * must link to reminder page
