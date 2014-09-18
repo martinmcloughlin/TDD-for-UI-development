@@ -70,3 +70,8 @@ Reminder link
 * Test password field for type
 * Test password field for placeholder
 * Test password field for validation on focus loss
+* Test checkbox in unchecked
+* Test form submit
+* Test post submit validation
+* Test reminder link format
+* Test URL follow on click
