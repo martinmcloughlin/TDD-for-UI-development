@@ -11,4 +11,10 @@ No Code is written for a function without
 1. defining a test
 2. making that test fail
 
-[Please use the wiki for full documentation](https://github.com/martinmcloughlin/TDD-for-UI-development/wiki)
+
+### Actual Testing
+
+Each folder will contain any test scripts created and the code that was created.
+
+[Please use the wiki for full investigation documentation](https://github.com/martinmcloughlin/TDD-for-UI-development/wiki)
+
