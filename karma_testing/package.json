@@ -8,6 +8,9 @@
     "gulp-rename": "~1.2.0",
     "gulp-jade": "~0.8.0",
     "require-dir": "~0.1.0",
-    "gulp-html-prettify": "0.0.1"
+    "gulp-html-prettify": "0.0.1",
+    "karma-jasmine-jquery": "~0.1.0",
+    //"requirejs": "~2.1.15",
+    //"karma-requirejs": "~0.2.2"
   }
 }
