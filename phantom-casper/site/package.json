@@ -10,6 +10,7 @@
     "gulp-html-prettify": "0.0.1",
     "require-dir": "~0.1.0",
     "gulp-util": "~3.0.1",
-    "gulp-uncss": "~0.4.5"
+    "gulp-uncss": "~0.4.5",
+    "glob": "~4.0.6"
   }
 }

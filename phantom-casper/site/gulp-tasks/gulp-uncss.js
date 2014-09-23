@@ -7,7 +7,7 @@ var uncss = require('gulp-uncss');
 gulp.task('cssclean', function() {
     return gulp.src('./output/css/base-min.css')
         .pipe(uncss({
-            html: ['./output/test.html']
+            html: ['./output/*.html']
         }))
         .pipe(gulp.dest('./output/css/cln'));
 });
