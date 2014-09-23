@@ -8,12 +8,3 @@ describe("simpleTests", function() {
         //expect(d).toBe(null); // fail
     });
 });
-
-describe("DOM test" , function (){
-    jasmine.getFixtures();
-    it('test1', function() {
-        $().destroyWin('window'); // jquery 1.3.2
-        expect(jq2('#window')).not.toBeInDOM(); // jq2 = jquery 2.1.1
-    });
-
-});
