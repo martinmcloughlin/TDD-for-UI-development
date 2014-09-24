@@ -3,21 +3,19 @@
  */
 // test external JS files...
 
+var stest = require('../js/test');
+
+console.log(stest);
+
+var stestVar = simpleTest.nd;
+
+console.log(stestVar);
+
 casper.test.begin('date checker', 1, function suite(test) {
-
-    //phantom.injectJs('./development/js/test.js');
-
-    require('development/js/test.js');
-    //mymodule.DateGetter();
-
-    var nd = DateGetter.nd;
-
-    //var d = new Date();
-    //var nd = d.getDate();
 
     casper.start('output/test.html', function() {
         //test.assertTitle('title','title here');
-        test.assertEquals(nd, 22);
+        //test.assertEquals(simpleTest.nd, 23);
 
     });
 

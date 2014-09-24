@@ -1,0 +1,22 @@
+html
+    head
+        script(type='text/javascript', src='../development/js/test.js')
+        script(src='/Users/martinmcloughlin/WebstormProjects/TDD-for-UI-development/qunit_testing/node_modules/qunitjs/qunit/qunit.js')
+        link(rel='stylesheet' href='//code.jquery.com/qunit/qunit-1.15.0.css')
+
+
+    body
+        #wrapper
+            include ./components/headtest
+            p
+                | Text can be included in a number of
+                | different ways.
+            p.
+              This way is shortest if you need big
+              blocks of text spanning multiple
+              lines.
+
+            #qunit
+            #qunit-fixture
+    script(src='../node_modules/qunitjs/qunit/qunit.js')
+    script(src='../qunit-tests/qunit-test-one.js')
