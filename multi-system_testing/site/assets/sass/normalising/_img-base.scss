@@ -1,0 +1,16 @@
+// baseline image normalise
+
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+// - Figures
+figure,
+.figure {
+    @include sizing(rem,margin,0);
+}

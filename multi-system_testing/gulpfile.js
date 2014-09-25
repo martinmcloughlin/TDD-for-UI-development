@@ -10,12 +10,7 @@ var gulp = require('gulp'),
     gp = require('gulp-load-plugins')(), // note camelCases hyphenated-names
     glob = require('glob');
 
-/*gulp.task('webserver', function() {
-    gp.connect.server({
-        livereload: true
-    });
-});*/
-
+// fire up webserver
 gulp.task('webserver', function() {
 
     gp.connect.server({
@@ -25,9 +20,7 @@ gulp.task('webserver', function() {
 
 });
 
-
-
-
+// compile SASS to CSS
 gulp.task('sassy', ['templates'], function() {
     gulp.src('./site/assets/sass/main.scss')
         .pipe(gp.sass())                        // convert sass to CSS
@@ -40,6 +33,7 @@ gulp.task('sassy', ['templates'], function() {
         .pipe(gp.connect.reload());
 });
 
+// compile the jade to HTML
 gulp.task('templates', function() {
     var YOUR_LOCALS = {};
 
@@ -52,10 +46,13 @@ gulp.task('templates', function() {
         .pipe(gp.connect.reload());
 });
 
+// watch for changes
 gulp.task('watch', function() {
     gulp.watch('./site/assets/sass/*.scss', ['sassy']);
     gulp.watch('./site/jade/*.jade', ['templates']);
     gulp.watch('./site/compiled/*.html', ['sassy']);
 })
 
+
+// fire all tasks
 gulp.task('default', ['sassy', 'webserver', 'watch']);

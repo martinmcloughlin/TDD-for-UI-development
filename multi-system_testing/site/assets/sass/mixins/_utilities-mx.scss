@@ -1,0 +1,161 @@
+// zero-box
+// box-radius()
+// circular
+// drop shadow()
+// animation()
+// hyphenate
+// hidden
+
+
+// zero margin and padding - use instead of including 2 seperate mixins where useful
+
+@mixin zero-box {
+	 margin: 0;
+	padding: 0;
+}
+
+
+// curved corners
+//
+// EXAMPLE USAGE -
+// @include box-radius(10,20,30,40);
+// @include box-radius(10);
+//
+
+@mixin box-radius($values...) {
+	$max: length($values);
+	$pxValues: '';
+	@for $i from 1 through $max {
+		  $value: nth($values, $i);
+		$valuePx: nth($values, $i);
+		@if $value == 0 {
+			$pxValues: #{$pxValues + $valuePx};
+		} @else {
+			$pxValues: #{$pxValues + $valuePx}px;
+		}
+		@if $i < $max {
+			$pxValues: #{$pxValues + " "};
+		}
+	}
+	-webkit-border-radius: $pxValues;
+			border-radius: $pxValues;
+	background-clip: padding-box;
+}
+
+
+// circularize!!
+//
+// EXAMPLE USAGE -
+// @include circular();
+//
+
+@mixin circular() {
+	-webkit-border-radius: percentage(1);
+			border-radius: percentage(1);
+	background-clip: padding-box;
+}
+
+// squarify!
+// if you need to force a square shape
+
+@mixin squared($size) {
+	 width: $size;
+	height: $size;
+}
+
+// drop shadow
+//
+// EXAMPLE USAGE -
+// @include box-shadow(5px 5px 10px 0 rgba(0,0,0,1));
+// @include box-shadow(5px 5px 10px 0 #000);
+//
+
+@mixin box-shadow($shadow...) {
+	-webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+			box-shadow: $shadow;
+}
+
+
+// animation
+
+@mixin cssanimate($what, $time, $easing) {
+	-webkit-transition: $what $time $easing;
+			transition: $what $time $easing;
+}
+
+
+// hyphenation
+
+@mixin hyphenate() {
+	white-space: pre;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+
+	-ms-word-break: break-all;
+		word-break: break-all;
+		word-break: break-word; // Non standard for webkit
+
+	-webkit-hyphens: auto;
+	   -moz-hyphens: auto;
+			hyphens: auto;
+
+	-webkit-hyphenate-before: 2;
+	 -webkit-hyphenate-after: 3;
+	hyphenate-lines: 3;
+}
+
+
+// hide
+
+@mixin hidden {
+    display: none;
+}
+
+//button generation
+
+@mixin buttonOff($usage, $colour) {
+	$fontColour: $white;
+	@if $colour == $white {
+		$fontColour: (darken($colour, 80%));
+	}
+	@if $colour == $yellow {
+		$fontColour: (darken($colour, 80%));
+	}
+	.btn-#{$usage}{
+		background: $colour;
+		border: 1px solid darken($colour, 10%);
+		color: $fontColour;
+	}
+}
+@mixin buttonOn($usage, $colour) {
+	$fontColour: $white;
+	@if $colour == $white{
+		$fontColour: (darken($colour, 80%));
+	}
+	.btn-#{$usage}:hover{
+		background: darken($colour, 20%);
+		border: 1px solid darken($colour, 30%);
+		@if $colour == $yellow {
+			color: $fontColour;
+		}
+	}
+}
+
+@mixin buttonType($usage, $colour) {
+	@include buttonOff($usage, $colour);
+	 @include buttonOn($usage, $colour);
+}
+
+@mixin buttonSize($sizeClass, $size, $corners){
+	$cornerSize: 0;
+	$pad-v: floor($size * 6);
+	$pad-h: floor($size * 12);
+	@if $corners == true {
+		$cornerSize: floor(6 * $size);
+	}
+	.btn-#{$sizeClass}{
+		@include box-radius($cornerSize);
+		@include sizing(rem,font-size,$size);
+		@include sizing(px,padding,$pad-v,$pad-h);
+	}
+}

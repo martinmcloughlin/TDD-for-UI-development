@@ -1,0 +1,13 @@
+// baseline table element normalise
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th,
+tr {
+    cellpadding: 0;
+    padding: 0;
+}

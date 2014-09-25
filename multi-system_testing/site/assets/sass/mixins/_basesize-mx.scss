@@ -1,0 +1,7 @@
+// Set base page font size
+
+@mixin base-size {
+				   font-size: percentage($baseMultiplier / 100);
+		-ms-text-size-adjust: percentage($baseMultiplier / 100);
+	-webkit-text-size-adjust: percentage($baseMultiplier / 100);
+}

@@ -1,0 +1,171 @@
+// === === ===
+// GRID STUFF
+// === === ===
+
+// grid clearfix mixin (only use for grids)
+
+@mixin cfix-grid() {
+
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+
+// do the grid maths for standard grid cols
+
+@mixin calc-grid-column($index, $type) {
+	@if ($type == width) {
+		.col-#{$index} {
+			width: percentage(($index / $grid-columns));
+		}
+	}
+	@if ($type == push) {
+		.col-push-#{$index} {
+			left: percentage(($index / $grid-columns));
+		}
+	}
+	@if ($type == pull) {
+		.col-pull-#{$index} {
+			right: percentage(($index / $grid-columns));
+		}
+	}
+	@if ($type == offset) {
+		.col-offset-#{$index} {
+			margin-left: percentage(($index / $grid-columns));
+		}
+	}
+}
+@mixin loop-grid-columns($columns, $type) {
+	@for $i from 1 through $columns {
+		@include calc-grid-column($i, $type);
+	}
+}
+@mixin make-grid() {
+	@include loop-grid-columns($grid-columns, width);
+	@include loop-grid-columns($grid-columns, pull);
+	@include loop-grid-columns($grid-columns, push);
+	@include loop-grid-columns($grid-columns, offset);
+}
+
+
+// do the grid maths for double width cols
+
+@mixin calc-grid-column-dbl($index, $type) {
+    @if ($type == width) and ($index > 0) and ($index < ($grid-columns / 2) + 1) {
+        .col-#{$index} {
+            width: percentage(($index / $grid-columns) * 2);
+        }
+    }
+    @if ($type == width) and ($index > (($grid-columns / 2 ))) and ($index <= $grid-columns) {
+        .col-#{$index} {
+            width: percentage((($index - ($grid-columns / 2 )) / $grid-columns) * 2);
+        }
+    }
+    @if ($type == push) and ($index > 0) and ($index < ($grid-columns / 2) + 1) {
+        .col-push-#{$index} {
+            left: percentage(($index / $grid-columns) * 2);
+        }
+    }
+    @if ($type == push) and ($index > (($grid-columns / 2 ))) and ($index <= $grid-columns) {
+        .col-push-#{$index} {
+            left: percentage((($index - ($grid-columns / 2 )) / $grid-columns) * 2);
+        }
+    }
+    @if ($type == pull) and ($index > 0) and ($index < ($grid-columns / 2) + 1) {
+        .col-pull-#{$index} {
+            right: percentage(($index / $grid-columns) * 2);
+        }
+    }
+    @if ($type == pull) and ($index > (($grid-columns / 2 ))) and ($index <= $grid-columns) {
+        .col-pull-#{$index} {
+            right: percentage((($index - ($grid-columns / 2 )) / $grid-columns) * 2);
+        }
+    }
+    @if ($type == offset) and ($index > 0) and ($index < ($grid-columns / 2) + 1) {
+        .col-offset-#{$index} {
+            margin-left: percentage(($index / $grid-columns) * 2);
+        }
+    }
+    @if ($type == offset) and ($index > (($grid-columns / 2 ))) and ($index <= $grid-columns) {
+        .col-offset-#{$index} {
+            margin-left: percentage((($index - ($grid-columns / 2 )) / $grid-columns) * 2);
+        }
+    }
+}
+
+@mixin loop-grid-columns-dbl($columns, $type) {
+    @for $i from 0 through $columns {
+        @include calc-grid-column-dbl($i, $type);
+    }
+}
+
+@mixin make-grid-double() {
+    @include loop-grid-columns-dbl($grid-columns, width);
+    @include loop-grid-columns-dbl($grid-columns, pull);
+    @include loop-grid-columns-dbl($grid-columns, push);
+    @include loop-grid-columns-dbl($grid-columns, offset);
+}
+
+
+// do the grid maths for 100% width columns
+
+@mixin calc-grid-column-full($index, $type) {
+	@if ($type == width) {
+		.col-#{$index} {
+			width: 100%;
+		}
+	}
+	@if ($type == push) {
+		.col-push-#{$index} {
+			left: 100%;
+		}
+	}
+	@if ($type == pull) {
+		.col-pull-#{$index} {
+			right: 100%;
+		}
+	}
+	@if ($type == offset) {
+		.col-offset-#{$index} {
+			margin-left: 100%;
+		}
+	}
+}
+@mixin loop-grid-columns-full($columns, $type) {
+	@for $i from 1 through $columns {
+		@include calc-grid-column-full($i, $type);
+	}
+}
+@mixin make-grid-full() {
+	@include loop-grid-columns-full($grid-columns, width);
+	@include loop-grid-columns-full($grid-columns, pull);
+	@include loop-grid-columns-full($grid-columns, push);
+	@include loop-grid-columns-full($grid-columns, offset);
+}
+
+
+// define container fixed
+
+@mixin container($width: 100%) {
+	 margin-right: auto;
+	  margin-left: auto;
+	 padding-left: ($grid-gutter-width / 2);
+	padding-right: ($grid-gutter-width / 2);
+	width: $width;
+	@include cfix-grid();
+}
+
+// Creates a wrapper for a series of columns
+
+@mixin make-hor-container($gutter: $grid-gutter-width) {
+	 margin-left: ($gutter / -2);
+	margin-right: ($gutter / -2);
+	@include cfix-grid();
+}

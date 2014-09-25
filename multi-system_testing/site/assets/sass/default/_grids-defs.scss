@@ -1,0 +1,31 @@
+//main grid definition
+
+.container, header{
+	@include container();
+}
+.fixed-width {
+	@include container(980px);
+}
+.row {
+	@include make-hor-container();
+}
+
+// make the columns
+@include make-grid;
+
+@media (max-width: $screen-md) {
+	@include make-grid-double;
+}
+
+@media (max-width: $screen-sm-min) {
+	@include make-grid-full;
+}
+
+// set for all columns
+*[class*='col-'] {
+	float: left;
+	min-height: 1px;
+	 padding-left: ($grid-gutter-width / 2);
+	padding-right: ($grid-gutter-width / 2);
+	position: relative;
+}

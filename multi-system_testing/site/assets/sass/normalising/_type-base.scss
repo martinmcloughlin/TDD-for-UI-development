@@ -1,0 +1,142 @@
+// baseline typography normalise
+
+h1, .h1 {
+    @include sizing(rem,font-size,2.2);
+}
+
+h2, .h2 {
+    @include sizing(rem,font-size,2.0);
+}
+
+h3, .h3 {
+    @include sizing(rem,font-size,1.6);
+}
+
+h4, .h5{
+    @include sizing(rem,font-size,1.4);
+}
+
+h5, .h5,
+h6, .h6 {
+    font-style: italic;
+    @include sizing(rem,font-size,1.2);
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h4,
+h6, .h6 {
+    color: $darkGray;
+    font-size-adjust: auto;
+    font-weight: bold;
+    line-height: $baseLineHeight;
+    @include sizing(rem,margin,0,0,2);
+}
+
+p {
+    font-size-adjust: auto;
+    line-height: $baseLineHeight;
+    @include hyphenate;
+    @include sizing(rem,font-size,1);
+    @include sizing(rem,margin,0,0,1.4,0);
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b,
+strong,
+.bold {
+    font-weight: bold;
+}
+
+dfn,
+i,
+.italics {
+    font-style: italic;
+}
+
+large,
+.large {
+    @include sizing(rem,font-size,1.2);
+}
+
+small,
+.small {
+    @include sizing(em,font-size,.8);
+}
+
+sub,
+.sub,
+sup,
+.sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    @include sizing(em,font-size,.75);
+}
+
+sup,
+.sup {
+    @include sizing(em,top,-.5);
+}
+
+sub,
+.sub, {
+    @include sizing(em,bottom,-.25);
+}
+
+blockquote,
+.blockquote {
+    font-size-adjust: auto;
+    @include sizing(rem,margin,1,4);
+}
+
+code,
+kbd,
+pre,
+samp {
+     font-family: $codefonts;
+    _font-family: $codefonts_b;
+    font-size-adjust: auto;
+    @include sizing(rem,font-size,1.4);
+}
+
+pre {
+    font-size-adjust: auto;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    @include sizing(rem,margin,1,0);
+}
+
+mark {
+    background: $yellow;
+    color: $black;
+}
+
+q {
+    quotes: none;
+}
+
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+hgroup{
+    @include sizing(rem,margin-bottom, 2);
+
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6 {
+        @include sizing(rem,margin,0);
+    }
+}
