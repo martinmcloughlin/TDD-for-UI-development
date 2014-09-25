@@ -16,7 +16,7 @@
 	  $silver: #ddd;
 	 	$gray: #aaa;
 	$darkGray: #444;
-	   $black: #111;
+	   $black: #000;
 
 // == Cool
 		$aqua: #7FDBFF;
@@ -81,7 +81,7 @@ $screen-xs:         320px !default;
 
 // == small
 $screen-sm-min:     $screen-xs + 1;
-$screen-sm:         600px !default;
+$screen-sm:         768px !default;
 
 // == medium
 $screen-md-min:     $screen-sm + 1;
