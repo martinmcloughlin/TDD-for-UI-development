@@ -13,6 +13,9 @@
     "gulp-sass": "~0.7.3",
     "gulp-load-plugins": "~0.6.0",
     "gulp-server-livereload": "~1.0.1",
-    "gulp-webserver": "~0.8.1"
+    "gulp-webserver": "~0.8.1",
+    "gulp-concat-json2js": "~0.1.0",
+    "gulp-to-json": "~1.0.1",
+    "gulp-uglify": "~1.0.1"
   }
 }

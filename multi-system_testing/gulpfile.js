@@ -12,12 +12,10 @@ var gulp = require('gulp'),
 
 // fire up webserver
 gulp.task('webserver', function() {
-
     gp.connect.server({
         root: 'site/compiled',
         livereload: true
     });
-
 });
 
 // compile SASS to CSS
@@ -46,13 +44,38 @@ gulp.task('templates', function() {
         .pipe(gp.connect.reload());
 });
 
+// get JSON of JS files
+gulp.task('tojson', function () {
+    console.log('making JSON');
+    gulp.src('./site/assets/js/*.js')
+        .pipe(gp.toJson({
+            strip: /^.*\/(?=[^\/]*$)/,
+            filename: './site/assets/js/allscripts.json'
+        }));
+
+});
+
+// concat and uglify JS
+gulp.task('compilejs', ['tojson'], function(){
+   console.log('compile JS');
+    gulp.src('./site/assets/js/**.json')
+        .pipe(gp.concatJson2js())
+        .pipe(gp.uglify())
+        .pipe(gp.rename({
+            basename: "scripts", suffix: '-min'
+        }))
+        .pipe(gulp.dest('./site/compiled/js'));
+});
+
+
 // watch for changes
 gulp.task('watch', function() {
     gulp.watch('./site/assets/sass/*.scss', ['sassy']);
     gulp.watch('./site/jade/*.jade', ['templates']);
+    gulp.watch('./site/assets/js/*.js', ['compilejs']);
     gulp.watch('./site/compiled/*.html', ['sassy']);
 })
 
 
 // fire all tasks
-gulp.task('default', ['sassy', 'webserver', 'watch']);
+gulp.task('default', ['sassy', 'webserver', 'compilejs', 'watch']);
