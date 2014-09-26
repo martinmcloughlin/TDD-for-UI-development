@@ -5,15 +5,24 @@
 <head>
   <title>title</title>
   <link rel="stylesheet" type="text/css" href="css/main-min.css" />
+  <!-- inject:css -->
+  <!-- endinject -->
+  <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css" />
 </head>
 
 <body>
   <div id="wrapper">
     <div class="main">
-      <p>test this for reloading</p>
+      <p>test this for reloading and jasmine</p>
     </div>
   </div>
-  <script type="text/javascript" src="js/scripts-min.js"></script>
 </body>
+<!-- inject:js -->
+<!-- endinject -->
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+<script type="text/javascript" src="js/scripts-min.js"></script>
+<script type="text/javascript" src="js/jasmine-tests/simpleJasmineTask.js"></script>
 
 </html>

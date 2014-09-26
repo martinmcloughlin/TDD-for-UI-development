@@ -1,1 +1,1 @@
-var d=new Date,nd=d.getDate();
+function dateGrabber(){return nd}var d=new Date,nd=d.getDate();

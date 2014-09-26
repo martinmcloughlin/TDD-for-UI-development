@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    karma = require('karma'),
     spawn = require('child_process').spawn,
     gp = require('gulp-load-plugins')(), // note camelCases hyphenated-names
     glob = require('glob');
@@ -17,7 +18,7 @@ gulp.task('webserver', function() {
 
 // JAVASCRIPT COMPILE
 
-// concat and uglify JS
+// 2. concat and uglify JS
 
 gulp.task('compilejs', ['tojson'], function(){
     console.log('compile JS from JSON list');
@@ -30,7 +31,7 @@ gulp.task('compilejs', ['tojson'], function(){
         .pipe(gulp.dest('./site/compiled/js'));
 });
 
-// get JSON of JS files
+// 1. get JSON of JS files
 
 gulp.task('tojson', function () {
     console.log('making JSON list of JS files for compilation');
@@ -101,10 +102,13 @@ gulp.task('watch', function() {
     gulp.watch('./site/assets/sass/*.scss', ['caspertest']);
     gulp.watch('./site/jade/*.jade', ['caspertest']);
     gulp.watch('./site/assets/js/*.js', ['compilejs']);
-    //gulp.watch('./site/compiled/*.html', ['caspertest']);
 });
 
 
-// fire all tasks
+// fire all main tasks
 
 gulp.task('default', ['webserver', 'compilejs', 'caspertest', 'watch']);
+
+// DEPLOY TASKS
+
+gulp.task('deploy');

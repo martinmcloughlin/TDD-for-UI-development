@@ -6,10 +6,20 @@ html
         title
             | title
         link(rel='stylesheet', type='text/css', href='css/main-min.css')
+        <!-- inject:css -->
+        <!-- endinject -->
+        link(rel='stylesheet', type='text/css', href='jasmine/lib/jasmine/jasmine.css')
+
 
     body
         #wrapper
             .main
-                p test this for reloading
+                p test this for reloading and jasmine
 
-        script(type='text/javascript', src='js/scripts-min.js')
+    <!-- inject:js -->
+    <!-- endinject -->
+    script(type='text/javascript', src='jasmine/lib/jasmine/jasmine.js')
+    script(type='text/javascript', src='jasmine/lib/jasmine/jasmine-html.js')
+    script(type='text/javascript', src='jasmine/lib/jasmine/boot.js')
+    script(type='text/javascript', src='js/scripts-min.js')
+    script(type='text/javascript', src='js/jasmine-tests/simpleJasmineTask.js')
