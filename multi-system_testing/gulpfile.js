@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    chalk = require('chalk'),
     karma = require('karma'),
     spawn = require('child_process').spawn,
     gp = require('gulp-load-plugins')(), // note camelCases hyphenated-names
@@ -8,7 +9,13 @@ var gulp = require('gulp'),
 // fire up webserver
 
 gulp.task('webserver', function() {
-    console.log('starting webserver');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                 ' + '\n' +
+            ' Server starting ' + '\n' +
+            '                 '
+        )
+    );
     gp.connect.server({
         root: 'site/compiled',
         livereload: true
@@ -21,24 +28,74 @@ gulp.task('webserver', function() {
 // 2. concat and uglify JS
 
 gulp.task('compilejs', ['tojson'], function(){
-    console.log('compile JS from JSON list');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                        ' + '\n' +
+            ' concatenating JS files ' + '\n' +
+            '                        '
+        )
+    );
     gulp.src('./site/assets/js/**.json')
         .pipe(gp.concatJson2js())
         .pipe(gp.uglify())
         .pipe(gp.rename({
             basename: "scripts", suffix: '-min'
         }))
-        .pipe(gulp.dest('./site/compiled/js'));
+        .pipe(gulp.dest('./site/compiled/js'))
+        .pipe(gp.connect.reload());
 });
 
-// 1. get JSON of JS files
+// 3 concat jasmine scripts
+
+gulp.task('compilejasmine', ['tojsonjasmine'], function(){
+    console.log(
+        chalk.white.bgRed.bold(
+            '                             ' + '\n' +
+            ' concatenating Jasmine tests ' + '\n' +
+            '                             '
+        )
+    );
+    gulp.src('./site/test-scripts/jasmine/**.json')
+        .pipe(gp.concatJson2js())
+        //.pipe(gp.uglify())
+        .pipe(gp.rename({
+            basename: "jasminetests"
+        }))
+        .pipe(gulp.dest('./site/compiled/js/jasmine-tests'))
+        .pipe(gp.connect.reload());;
+});
+
+// 2.1. get JSON of JS files
 
 gulp.task('tojson', function () {
-    console.log('making JSON list of JS files for compilation');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                            ' + '\n' +
+            ' Compiling list of JS files ' + '\n' +
+            '                            '
+        )
+    );
     gulp.src('./site/assets/js/*.js')
         .pipe(gp.toJson({
             strip: /^.*\/(?=[^\/]*$)/,
             filename: './site/assets/js/allscripts.json'
+        }));
+
+});
+
+// 3.1. make JSON of Jasmine Tests
+gulp.task('tojsonjasmine', function () {
+    console.log(
+        chalk.white.bgRed.bold(
+            '                                 ' + '\n' +
+            ' Compiling list of Jasmine tests ' + '\n' +
+            '                                 '
+        )
+    );
+    gulp.src('./site/test-scripts/jasmine/*.js')
+        .pipe(gp.toJson({
+            strip: /^.*\/(?=[^\/]*$)/,
+            filename: './site/test-scripts/jasmine/alljasmine.json'
         }));
 
 });
@@ -49,7 +106,6 @@ gulp.task('tojson', function () {
 // trigger the Casper tests
 
 gulp.task('caspertest', ['sassy'], function () {
-    console.log('running Casper tests');
     var tests = glob.sync('./site/test-scripts/casper/*.js');
     var casperChild = spawn('casperjs', ['test'].concat(tests));
     casperChild.stdout.on('data', function (data) {
@@ -58,7 +114,24 @@ gulp.task('caspertest', ['sassy'], function () {
     casperChild.on('close', function (code) {
         var success = code === 0; // Will be 1 in the event of failure
         // Do something with success here
-        console.log('casper tests all complete')
+        if (success == false) {
+            console.log(
+                chalk.white.bgRed.bold(
+                    '                             ' + '\n' +
+                    ' Casper is scared of failure ' + '\n' +
+                    '                             '
+                )
+            );
+
+        } else {
+            console.log(
+                chalk.black.bgGreen.bold(
+                    '                            ' + '\n' +
+                    ' Casper is a friendly ghost ' + '\n' +
+                    '                            '
+                )
+            );
+        }
     });
 });
 
@@ -68,7 +141,13 @@ gulp.task('caspertest', ['sassy'], function () {
 // compile SASS to CSS
 
 gulp.task('sassy', ['templates'], function() {
-    console.log('compile SASS to CSS');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                        ' + '\n' +
+            ' Converting Sass to CSS ' + '\n' +
+            '                        '
+        )
+    );
     gulp.src('./site/assets/sass/main.scss')
         .pipe(gp.sass())                        // convert sass to CSS
         .pipe(gp.uncss({
@@ -83,7 +162,13 @@ gulp.task('sassy', ['templates'], function() {
 // compile the jade to HTML
 
 gulp.task('templates', function() {
-    console.log('compile the jade to HTML');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                        ' + '\n' +
+            ' Compiling Jade to HTML ' + '\n' +
+            '                        '
+        )
+    );
     var YOUR_LOCALS = {};
     gulp.src('./site/jade/*.jade')
         .pipe(gp.jade({
@@ -98,17 +183,56 @@ gulp.task('templates', function() {
 // watch for changes
 
 gulp.task('watch', function() {
-    console.log('change watcher starting');
     gulp.watch('./site/assets/sass/*.scss', ['caspertest']);
     gulp.watch('./site/jade/*.jade', ['caspertest']);
     gulp.watch('./site/assets/js/*.js', ['compilejs']);
+    gulp.watch('./site/test-scripts/jasmine/*.js', ['compilejasmine']);
 });
 
 
 // fire all main tasks
 
-gulp.task('default', ['webserver', 'compilejs', 'caspertest', 'watch']);
+gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 'watch']);
+
+
 
 // DEPLOY TASKS
 
-gulp.task('deploy');
+// Strip Jasmine
+
+gulp.task('stripjasmine', function() {
+    var pagestrip = glob.sync('./site/compiled/*.html');
+    gulp.src(pagestrip)
+        .pipe(gp.htmlReplace({keepUnassigned: false}))
+        .pipe(gulp.dest('./site/compiled/'));
+});
+
+// fire up webserver
+
+gulp.task('webserver2', ['stripjasmine'], function() {
+    console.log(
+        chalk.white.bgRed.bold(
+                '                             ' + '\n' +
+                ' Deployables server starting ' + '\n' +
+                '                             '
+        )
+    );
+    gp.connect.server({
+        root: 'site/compiled',
+        livereload: true,
+        port: 8086
+    });
+});
+
+// fire 'deployables' tasks
+
+gulp.task('deployable', ['webserver2'], function(){
+    console.log(
+        chalk.white.bgRed.bold(
+            '                                       ' + '\n' +
+            '     Deployables creation starting     ' + '\n' +
+            ' Files created are compiled for upload ' + '\n' +
+            '                                       '
+        )
+    );
+});

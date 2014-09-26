@@ -4,7 +4,4 @@
 
 var d = new Date();
 var nd = d.getDate();
-
-function dateGrabber(){
-    return nd;
-}
+var mmx = "hi";
