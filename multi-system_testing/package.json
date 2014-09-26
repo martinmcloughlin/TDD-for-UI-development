@@ -21,7 +21,6 @@
     "karma": "~0.12.23",
     "gulp-karma": "0.0.4",
     "karma-jasmine": "~0.1.5",
-    "karma-chrome-launcher": "~0.1.4",
-    "gulp-notify": "~1.8.0"
+    "karma-chrome-launcher": "~0.1.4"
   }
 }
