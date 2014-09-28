@@ -29,7 +29,7 @@ gulp.task('webserver', function() {
 
 gulp.task('compilejs', ['tojson'], function(){
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                        ' + '\n' +
             ' concatenating JS files ' + '\n' +
             '                        '
@@ -49,7 +49,7 @@ gulp.task('compilejs', ['tojson'], function(){
 
 gulp.task('compilejasmine', ['tojsonjasmine'], function(){
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                             ' + '\n' +
             ' concatenating Jasmine tests ' + '\n' +
             '                             '
@@ -69,7 +69,7 @@ gulp.task('compilejasmine', ['tojsonjasmine'], function(){
 
 gulp.task('tojson', function () {
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                            ' + '\n' +
             ' Compiling list of JS files ' + '\n' +
             '                            '
@@ -86,7 +86,7 @@ gulp.task('tojson', function () {
 // 3.1. make JSON of Jasmine Tests
 gulp.task('tojsonjasmine', function () {
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                                 ' + '\n' +
             ' Compiling list of Jasmine tests ' + '\n' +
             '                                 '
@@ -142,7 +142,7 @@ gulp.task('caspertest', ['sassy'], function () {
 
 gulp.task('sassy', ['templates'], function() {
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                        ' + '\n' +
             ' Converting Sass to CSS ' + '\n' +
             '                        '
@@ -163,14 +163,14 @@ gulp.task('sassy', ['templates'], function() {
 
 gulp.task('templates', function() {
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgCyan.bold(
             '                        ' + '\n' +
             ' Compiling Jade to HTML ' + '\n' +
             '                        '
         )
     );
     var YOUR_LOCALS = {};
-    gulp.src('./site/jade/*.jade')
+    gulp.src('./site/jade/**/*.jade')
         .pipe(gp.jade({
             locals: YOUR_LOCALS
         }))
@@ -196,12 +196,21 @@ gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 
 
 
 
+
+
 // DEPLOY TASKS
 
 // Strip Jasmine
 
 gulp.task('stripjasmine', function() {
-    var pagestrip = glob.sync('./site/compiled/*.html');
+    console.log(
+        chalk.white.bgRed.bold(
+            '                                    ' + '\n' +
+            ' Stripping jasmine from deployables ' + '\n' +
+            '                                    '
+        )
+    );
+    var pagestrip = glob.sync('./site/compiled/**/*.html');
     gulp.src(pagestrip)
         .pipe(gp.htmlReplace({keepUnassigned: false}))
         .pipe(gulp.dest('./site/compiled/'));
@@ -211,10 +220,10 @@ gulp.task('stripjasmine', function() {
 
 gulp.task('webserver2', ['stripjasmine'], function() {
     console.log(
-        chalk.white.bgRed.bold(
-                '                             ' + '\n' +
-                ' Deployables server starting ' + '\n' +
-                '                             '
+        chalk.black.bgCyan.bold(
+            '                             ' + '\n' +
+            ' Deployables server starting ' + '\n' +
+            '                             '
         )
     );
     gp.connect.server({
@@ -224,13 +233,50 @@ gulp.task('webserver2', ['stripjasmine'], function() {
     });
 });
 
+// SFTP
+
+gulp.task('uploader',['deployable'], function () {
+    console.log(
+        chalk.black.bgCyan.bold(
+            '                               ' + '\n' +
+            ' Deployables transfer starting ' + '\n' +
+            '                               '
+        )
+    );
+    return gulp.src('site/compiled/*')
+        .pipe(gp.sftp({
+            host: 'website.com',
+            user: 'johndoe',
+            pass: '1234'
+        }))
+        .on('error', function(){
+            console.log(
+                chalk.white.bgRed.bold(
+                    '                       ' + '\n' +
+                    ' ERROR ON FILETRANSFER ' + '\n' +
+                    '                       '
+                )
+            );
+        })
+        .on('success', function(){
+            console.log(
+                chalk.white.bgGreen.bold(
+                    '                         ' + '\n' +
+                    ' SUCCESS ON FILETRANSFER ' + '\n' +
+                    '                         '
+                )
+            );
+        });
+
+});
+
 // fire 'deployables' tasks
 
 gulp.task('deployable', ['webserver2'], function(){
     console.log(
-        chalk.white.bgRed.bold(
+        chalk.black.bgWhite.bold(
             '                                       ' + '\n' +
-            '     Deployables creation starting     ' + '\n' +
+            '          Deployables now ready        ' + '\n' +
             ' Files created are compiled for upload ' + '\n' +
             '                                       '
         )
