@@ -62,7 +62,7 @@ gulp.task('compilejasmine', ['tojsonjasmine'], function(){
             basename: "jasminetests"
         }))
         .pipe(gulp.dest('./site/compiled/js/jasmine-tests'))
-        .pipe(gp.connect.reload());;
+        .pipe(gp.connect.reload());
 });
 
 // 2.1. get JSON of JS files
@@ -183,7 +183,7 @@ gulp.task('templates', function() {
 // watch for changes
 
 gulp.task('watch', function() {
-    gulp.watch('./site/assets/sass/*.scss', ['caspertest']);
+    gulp.watch('./site/assets/sass/**/*.scss', ['caspertest']);
     gulp.watch('./site/jade/*.jade', ['caspertest']);
     gulp.watch('./site/assets/js/*.js', ['compilejs']);
     gulp.watch('./site/test-scripts/jasmine/*.js', ['compilejasmine']);

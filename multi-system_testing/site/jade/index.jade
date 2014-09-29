@@ -13,9 +13,16 @@ html
 
 
     body
-        #wrapper
-            .main
+        #wrapper.row
+            .main.col-12
                 p test this for reloading and jasmine
+
+            nav
+                ul
+                    li
+                        a.testlink(href='pagetwo.html') test link
+                    li
+                        a.testlink(href='thirdpagetest.html') test link
 
         // build:js
         script(type='text/javascript', src='jasmine/lib/jasmine/jasmine.js')

@@ -1,0 +1,13 @@
+body {
+  background: $white;
+}
+
+nav {
+  li {
+    float: left;
+    a {
+      padding: 10px;
+      background: $red;
+    }
+  }
+}

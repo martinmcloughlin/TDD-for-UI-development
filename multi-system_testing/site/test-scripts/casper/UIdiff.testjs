@@ -1,0 +1,64 @@
+/**
+ * Created by martinmcloughlin on 29/09/2014.
+ */
+var phantomcss = require("../../../node_modules/phantomcss/phantomcss.js");
+
+phantomcss.init({
+    cleanupComparisonImages: false,
+    screenshotRoot: './site/test-scripts/diffscreenshots',
+    libraryRoot: 'node_modules/phantomcss'
+    /*
+     screenshotRoot: '/screenshots',
+     failedComparisonsRoot: '/failures'
+     casper: specific_instance_of_casper,
+     libraryRoot: '/phantomcss',
+     fileNameGetter: function overide_file_naming(){},
+     onPass: function passCallback(){},
+     onFail: function failCallback(){},
+     onTimeout: function timeoutCallback(){},
+     onComplete: function completeCallback(){},
+     hideElements: '#thing.selector',
+     addLabelToFailedImage: true,
+     outputSettings: {
+     errorColor: {
+     red: 255,
+     green: 255,
+     blue: 0
+     },
+     errorType: 'movement',
+     transparency: 0.3
+     }*/
+});
+
+casper.test.begin('testing grabbing', function (test) {
+
+    casper.start('./site/compiled/index.html', function () {
+        test.assertTitle('title');
+    });
+
+    casper.viewport(1024, 768);
+
+    casper.then(function () {
+        phantomcss.screenshot('div.main','mainshot');
+    });
+
+    casper.then(function () {
+        var pageName = this.getTitle();
+        this.capture('./site/test-scripts/fullscreens/complete-' + pageName + '.png');
+    });
+
+    casper.then(function now_check_the_screenshots() {
+        // compare screenshots
+        phantomcss.compareAll();
+    });
+
+    /*
+     Casper runs tests
+     */
+    casper.run(function () {
+        console.log('\nTHE END.');
+        phantom.exit(phantomcss.getExitStatus());
+        test.done();
+    });
+
+});
