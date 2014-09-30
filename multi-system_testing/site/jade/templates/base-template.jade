@@ -1,0 +1,21 @@
+// Created by martinmcloughlin on 30/09/2014.
+block variables
+html
+    head
+        title #{title}
+        link(rel='stylesheet', type='text/css', href='css/main-min.css')
+        // build:css
+        link(rel='stylesheet', type='text/css', href='jasmine/lib/jasmine/jasmine.css')
+        // endbuild
+    body
+        #wrapper.container
+            .row
+                .col-xs-12
+                    include ../blocks/site-level/navigation
+            .row
+                .col-xs-12
+                    p test
+
+            block structure
+
+        include ../blocks/site-level/footer-scripts

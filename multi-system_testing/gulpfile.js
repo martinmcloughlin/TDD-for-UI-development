@@ -39,7 +39,7 @@ gulp.task('compilejs', ['tojson'], function(){
         .pipe(gp.concatJson2js())
         .pipe(gp.uglify())
         .pipe(gp.rename({
-            basename: "scripts", suffix: '-min'
+            basename: 'scripts', suffix: '-min'
         }))
         .pipe(gulp.dest('./site/compiled/js'))
         .pipe(gp.connect.reload());
@@ -59,7 +59,7 @@ gulp.task('compilejasmine', ['tojsonjasmine'], function(){
         .pipe(gp.concatJson2js())
         //.pipe(gp.uglify())
         .pipe(gp.rename({
-            basename: "jasminetests"
+            basename: 'jasminetests'
         }))
         .pipe(gulp.dest('./site/compiled/js/jasmine-tests'))
         .pipe(gp.connect.reload());
@@ -148,13 +148,13 @@ gulp.task('sassy', ['templates'], function() {
             '                        '
         )
     );
-    gulp.src('./site/assets/sass/main.scss')
+    gulp.src('./site/assets/sass/bootstrap.scss')
         .pipe(gp.sass())                        // convert sass to CSS
         .pipe(gp.uncss({
             html: glob.sync('./site/compiled/*.html')
         }))                                     // clean it up
         .pipe(gp.minifyCss())                   // minify it
-        .pipe(gp.rename({suffix: '-min'}))      // rename it
+        .pipe(gp.rename({basename: 'main', suffix: '-min'}))      // rename it
         .pipe(gulp.dest('./site/compiled/css')) // store it
         .pipe(gp.connect.reload());
 });
@@ -170,7 +170,7 @@ gulp.task('templates', function() {
         )
     );
     var YOUR_LOCALS = {};
-    gulp.src('./site/jade/**/*.jade')
+    gulp.src('./site/jade/*.jade')
         .pipe(gp.jade({
             locals: YOUR_LOCALS
         }))
@@ -185,6 +185,8 @@ gulp.task('templates', function() {
 gulp.task('watch', function() {
     gulp.watch('./site/assets/sass/**/*.scss', ['caspertest']);
     gulp.watch('./site/jade/*.jade', ['caspertest']);
+    gulp.watch('./site/jade/blocks/**/*.jade', ['templates']);
+    gulp.watch('./site/jade/templates/**/*.jade', ['templates']);
     gulp.watch('./site/assets/js/*.js', ['compilejs']);
     gulp.watch('./site/test-scripts/jasmine/*.js', ['compilejasmine']);
 });

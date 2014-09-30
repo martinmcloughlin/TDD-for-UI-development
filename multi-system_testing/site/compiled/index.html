@@ -1,4 +1,4 @@
-<!-- Created by martinmcloughlin on 25/09/2014.-->
+<!-- Created by martinmcloughlin on 30/09/2014.-->
 <html>
 
 <head>
@@ -10,18 +10,32 @@
 </head>
 
 <body>
-  <div id="wrapper" class="row">
-    <div class="main col-12">
-      <p>test this for reloading and jasmine</p>
+  <div id="wrapper" class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <nav>
+          <ul>
+            <li><a href="pagetwo.html" class="testlink">test link</a>
+            </li>
+            <li><a href="thirdpagetest.html" class="testlink">test link</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li><a href="pagetwo.html" class="testlink">test link</a>
-        </li>
-        <li><a href="thirdpagetest.html" class="testlink">test link</a>
-        </li>
-      </ul>
-    </nav>
+    <div class="row">
+      <div class="col-xs-12">
+        <p>test</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-8">
+        <p>8 cols</p>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <p>4 cols</p>
+      </div>
+    </div>
   </div>
   <!-- build:js-->
   <script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
