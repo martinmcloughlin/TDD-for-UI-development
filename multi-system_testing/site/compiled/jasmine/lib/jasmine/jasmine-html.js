@@ -50,8 +50,8 @@ jasmineRequire.HtmlReporter = function(j$) {
 
     this.initialize = function() {
       clearPrior();
-      htmlReporterMain = createDom('div', {className: 'jasmine_html-reporter'},
-        createDom('div', {className: 'banner'},
+      htmlReporterMain = createDom('div', {className: 'jasmine_html-reporter container'},
+        createDom('div', {className: 'banner col-xs-12'},
           createDom('a', {className: 'title', href: 'http://jasmine.github.io/', target: '_blank'}),
           createDom('span', {className: 'version'}, j$.version)
         ),
