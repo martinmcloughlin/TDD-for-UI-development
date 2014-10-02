@@ -1,3 +1,11 @@
 block variables
     - var title='title'
 extends templates/eight-four-split
+block maincontent
+    //productGrid(totalnumber,numberinrow)
+    +productGrid(11,3)
+    //include blocks/modules/product-grid
+    // after
+
+block rightcolumn
+    //+productGrid(6,1)

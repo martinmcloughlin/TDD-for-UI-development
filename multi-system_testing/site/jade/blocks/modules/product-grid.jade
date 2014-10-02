@@ -1,0 +1,18 @@
+mixin productGrid(count, layoutitems)
+
+    .row
+
+        - var ItemCounter = 0;
+        - var newNumber = 12/layoutitems;
+        - var newClass = "col-md-" + newNumber;
+
+        - for (var i = 0; i < count; ++i) {
+            - ItemCounter++;
+            if ItemCounter == layoutitems
+                div(class="col-md-#{newNumber} col-xs-12 last")
+                    p test LAST
+                - ItemCounter = 0;
+            else
+                div(class="col-md-#{newNumber} col-xs-12")
+                    p test NORM
+        - }

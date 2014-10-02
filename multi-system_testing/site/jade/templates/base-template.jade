@@ -1,6 +1,6 @@
 // Created by martinmcloughlin on 30/09/2014.
 block variables
-
+include ../blocks/blocklist
 doctype html
 | <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 | <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
@@ -15,9 +15,9 @@ head
         title #{title}
         meta(name='description', content='')
         meta(name='viewport', content='width=device-width, initial-scale=1')
-        link(rel='stylesheet', type='text/css', href='css/main-min.css')
+        link(rel='stylesheet', type='text/css', href='../css/main-min.css')
         // build:css
-        link(rel='stylesheet', type='text/css', href='jasmine/lib/jasmine/jasmine.css')
+        link(rel='stylesheet', type='text/css', href='../jasmine/lib/jasmine/jasmine.css')
         // endbuild
         include ../blocks/site-level/header-scripts
     body
@@ -25,10 +25,11 @@ head
         #wrapper.container
             .row
                 .col-xs-12
-                    include ../blocks/site-level/navigation
+                    +mainNav()
             .row
                 .col-xs-12
-                    p test
+                    span crumbs
+
 
             block structure
 

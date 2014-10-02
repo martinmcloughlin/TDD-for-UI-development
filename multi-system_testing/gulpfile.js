@@ -100,7 +100,6 @@ gulp.task('tojsonjasmine', function () {
 
 });
 
-
 // CASPER TESTS
 
 // trigger the Casper tests
