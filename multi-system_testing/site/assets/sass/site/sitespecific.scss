@@ -19,9 +19,9 @@ body {
   a {
     color: $brand-primary;
     &.active {
+      //here
       font-weight: $headings-font-weight;
       color: $brand-success;
-
     }
   }
   &>li{
