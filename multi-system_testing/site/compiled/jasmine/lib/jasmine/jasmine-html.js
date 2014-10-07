@@ -296,7 +296,7 @@ jasmineRequire.HtmlReporter = function(j$) {
     }
 
     function setMenuModeTo(mode) {
-      htmlReporterMain.setAttribute('class', 'jasmine_html-reporter ' + mode);
+      htmlReporterMain.setAttribute('class', 'jasmine_html-reporter container ' + mode);
     }
 
     function noExpectations(result) {
