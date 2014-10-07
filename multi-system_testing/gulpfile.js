@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 
 // A - fire all main tasks
 
-gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 'watch']);
+gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 'karmarun', 'webserver2', 'watch']);
 
 
 // A1 - fire up webserver
@@ -99,7 +99,7 @@ gulp.task('tojsonjasmine', function () {
 
 // trigger the Casper tests
 
-gulp.task('caspertest',/* ['uncssit'], */ ['sassy'], function () {
+gulp.task('caspertest',/* ['uncssit'], */ ['sassy'],  function () {
     var tests = glob.sync('./site/test-scripts/casper/*.js');
     var casperChild = spawn('casperjs', ['test'].concat(tests));
     casperChild.stdout.on('data', function (data) {
@@ -191,7 +191,6 @@ gulp.task('templates', function() {
         .pipe(gp.connect.reload());
 });
 
-
 // A5 - watch for changes
 
 gulp.task('watch', function() {
@@ -202,7 +201,6 @@ gulp.task('watch', function() {
     gulp.watch('./site/assets/js/*.js', ['compilejs']);
     gulp.watch('./site/test-scripts/jasmine/*.js', ['compilejasmine']);
 });
-
 
 // B - DEPLOY TASKS
 
@@ -236,7 +234,14 @@ gulp.task('uploader',['deployable'], function () {
         });
 
 });
-
+// KARMA RUNNER
+gulp.task('karmarun', function (done) {
+    return gulp.src('./idontexist')
+        .pipe(gp.karma({
+            configFile: './site/test-scripts/karma.conf.js',
+            action: 'watch'
+        }));
+});
 
 // B1.1 - fire 'deployables' tasks
 
@@ -251,14 +256,14 @@ gulp.task('deployable', ['webserver2'], function(){
 
 // B1.1.1 - fire up webserver
 
-gulp.task('webserver2', ['stripjasmine'], function() {
+gulp.task('webserver2', /*['stripjasmine'],*/ function() {
     console.log(
         chalk.black.bgCyan.bold(
-                ' Deployables server starting '
+                ' COVERAGE TEST server starting '
         )
     );
     gp.connect.server({
-        root: 'site/compiled',
+        root: 'site/coverage/',
         livereload: true,
         port: 8086
     });
