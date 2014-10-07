@@ -6,14 +6,17 @@ var gulp = require('gulp'),
     glob = require('glob');
 
 
-// fire up webserver
+// A - fire all main tasks
+
+gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 'watch']);
+
+
+// A1 - fire up webserver
 
 gulp.task('webserver', function() {
     console.log(
         chalk.white.bgRed.bold(
-            '                 ' + '\n' +
-            ' Server starting ' + '\n' +
-            '                 '
+            ' Server starting '
         )
     );
     gp.connect.server({
@@ -23,16 +26,14 @@ gulp.task('webserver', function() {
 });
 
 
-// JAVASCRIPT COMPILE
+// A2 - JAVASCRIPT COMPILE
 
-// 2. concat and uglify JS
+// A2.1 concat and uglify JS
 
 gulp.task('compilejs', ['tojson'], function(){
     console.log(
         chalk.black.bgCyan.bold(
-            '                        ' + '\n' +
-            ' concatenating JS files ' + '\n' +
-            '                        '
+            ' concatenating JS files '
         )
     );
     gulp.src('./site/assets/js/**.json')
@@ -45,14 +46,12 @@ gulp.task('compilejs', ['tojson'], function(){
         .pipe(gp.connect.reload());
 });
 
-// 3 concat jasmine scripts
+// A2.2 concat jasmine scripts
 
 gulp.task('compilejasmine', ['tojsonjasmine'], function(){
     console.log(
         chalk.black.bgCyan.bold(
-            '                             ' + '\n' +
-            ' concatenating Jasmine tests ' + '\n' +
-            '                             '
+            ' concatenating Jasmine tests '
         )
     );
     gulp.src('./site/test-scripts/jasmine/**.json')
@@ -65,14 +64,12 @@ gulp.task('compilejasmine', ['tojsonjasmine'], function(){
         .pipe(gp.connect.reload());
 });
 
-// 2.1. get JSON of JS files
+// A2.1.1 get JSON of JS files
 
 gulp.task('tojson', function () {
     console.log(
         chalk.black.bgCyan.bold(
-            '                            ' + '\n' +
-            ' Compiling list of JS files ' + '\n' +
-            '                            '
+            ' Compiling list of JS files '
         )
     );
     gulp.src('./site/assets/js/*.js')
@@ -83,13 +80,11 @@ gulp.task('tojson', function () {
 
 });
 
-// 3.1. make JSON of Jasmine Tests
+// A2.2.1. make JSON of Jasmine Tests
 gulp.task('tojsonjasmine', function () {
     console.log(
         chalk.black.bgCyan.bold(
-            '                                 ' + '\n' +
-            ' Compiling list of Jasmine tests ' + '\n' +
-            '                                 '
+            ' Compiling list of Jasmine tests '
         )
     );
     gulp.src('./site/test-scripts/jasmine/*.js')
@@ -100,11 +95,11 @@ gulp.task('tojsonjasmine', function () {
 
 });
 
-// CASPER TESTS
+// A3 - CASPER TESTS
 
 // trigger the Casper tests
 
-gulp.task('caspertest', ['sassy'], function () {
+gulp.task('caspertest',/* ['uncssit'], */ ['sassy'], function () {
     var tests = glob.sync('./site/test-scripts/casper/*.js');
     var casperChild = spawn('casperjs', ['test'].concat(tests));
     casperChild.stdout.on('data', function (data) {
@@ -116,18 +111,14 @@ gulp.task('caspertest', ['sassy'], function () {
         if (success == false) {
             console.log(
                 chalk.white.bgRed.bold(
-                    '                             ' + '\n' +
-                    ' Casper is scared of failure ' + '\n' +
-                    '                             '
+                    ' Casper is scared of failure '
                 )
             );
 
         } else {
             console.log(
                 chalk.black.bgGreen.bold(
-                    '                            ' + '\n' +
-                    ' Casper is a friendly ghost ' + '\n' +
-                    '                            '
+                    ' Casper is a friendly ghost '
                 )
             );
         }
@@ -135,37 +126,59 @@ gulp.task('caspertest', ['sassy'], function () {
 });
 
 
-// COMPILE CONTENT / DISPLAY
+// A4 - COMPILE CONTENT / DISPLAY
 
-// compile SASS to CSS
+// A4.3 compile SASS to CSS
 
 gulp.task('sassy', ['templates'], function() {
     console.log(
         chalk.black.bgCyan.bold(
-            '                        ' + '\n' +
-            ' Converting Sass to CSS ' + '\n' +
-            '                        '
+            ' Converting Sass to CSS '
         )
     );
     gulp.src('./site/assets/sass/bootstrap.scss')
         .pipe(gp.sass())                        // convert sass to CSS
-        .pipe(gp.uncss({
-            html: glob.sync('./site/compiled/*.html')
-        }))                                     // clean it up
+        .pipe(gp.rename({basename: 'main'}))      // rename it
         .pipe(gp.minifyCss())                   // minify it
-        .pipe(gp.rename({basename: 'main', suffix: '-min'}))      // rename it
+        .pipe(gp.rename({suffix: '-min'}))
         .pipe(gulp.dest('./site/compiled/css')) // store it
+
+});
+
+// A4.1 strip the css back
+
+gulp.task('uncssit', ['sassy'], function() {
+    gulp.src('./site/compiled/css/main.css')
+        .pipe(gp.uncss({
+            html: glob.sync('./site/compiled/*.html'),
+            ignore: [
+                '.fade',
+                '.fade.in',
+                '.collapse',
+                '.collapse.in',
+                '.navbar-collapse',
+                '.navbar-collapse.in',
+                '.navbar-fixed-top',
+                '.collapsing',
+                '.alert-danger',
+                '.visible-xs',
+                '.open',
+                /^.*\b(open)\b.*$/,
+                '.noscript-warning'
+            ]
+        }))
+        .pipe(gp.minifyCss())                   // minify it
+        .pipe(gp.rename({suffix: '-min'}))
+        .pipe(gulp.dest('./site/compiled/css'))
         .pipe(gp.connect.reload());
 });
 
-// compile the jade to HTML
+// A4.1 compile the jade to HTML
 
 gulp.task('templates', function() {
     console.log(
         chalk.black.bgCyan.bold(
-            '                        ' + '\n' +
-            ' Compiling Jade to HTML ' + '\n' +
-            '                        '
+            ' Compiling Jade to HTML '
         )
     );
     var YOUR_LOCALS = {};
@@ -179,7 +192,7 @@ gulp.task('templates', function() {
 });
 
 
-// watch for changes
+// A5 - watch for changes
 
 gulp.task('watch', function() {
     gulp.watch('./site/assets/sass/**/*.scss', ['caspertest']);
@@ -191,57 +204,14 @@ gulp.task('watch', function() {
 });
 
 
-// fire all main tasks
+// B - DEPLOY TASKS
 
-gulp.task('default', ['webserver', 'compilejs', 'compilejasmine', 'caspertest', 'watch']);
-
-
-
-
-
-// DEPLOY TASKS
-
-// Strip Jasmine
-
-gulp.task('stripjasmine', function() {
-    console.log(
-        chalk.white.bgRed.bold(
-            '                                    ' + '\n' +
-            ' Stripping jasmine from deployables ' + '\n' +
-            '                                    '
-        )
-    );
-    var pagestrip = glob.sync('./site/compiled/**/*.html');
-    gulp.src(pagestrip)
-        .pipe(gp.htmlReplace({keepUnassigned: false}))
-        .pipe(gulp.dest('./site/compiled/'));
-});
-
-// fire up webserver
-
-gulp.task('webserver2', ['stripjasmine'], function() {
-    console.log(
-        chalk.black.bgCyan.bold(
-            '                             ' + '\n' +
-            ' Deployables server starting ' + '\n' +
-            '                             '
-        )
-    );
-    gp.connect.server({
-        root: 'site/compiled',
-        livereload: true,
-        port: 8086
-    });
-});
-
-// SFTP
+// B1 - SFTP
 
 gulp.task('uploader',['deployable'], function () {
     console.log(
         chalk.black.bgCyan.bold(
-            '                               ' + '\n' +
-            ' Deployables transfer starting ' + '\n' +
-            '                               '
+                ' Deployables transfer starting '
         )
     );
     return gulp.src('site/compiled/*')
@@ -253,33 +223,57 @@ gulp.task('uploader',['deployable'], function () {
         .on('error', function(){
             console.log(
                 chalk.white.bgRed.bold(
-                    '                       ' + '\n' +
-                    ' ERROR ON FILETRANSFER ' + '\n' +
-                    '                       '
+                        ' ERROR ON FILETRANSFER '
                 )
             );
         })
         .on('success', function(){
             console.log(
                 chalk.white.bgGreen.bold(
-                    '                         ' + '\n' +
-                    ' SUCCESS ON FILETRANSFER ' + '\n' +
-                    '                         '
+                        ' SUCCESS ON FILETRANSFER '
                 )
             );
         });
 
 });
 
-// fire 'deployables' tasks
+
+// B1.1 - fire 'deployables' tasks
 
 gulp.task('deployable', ['webserver2'], function(){
     console.log(
         chalk.black.bgWhite.bold(
-            '                                       ' + '\n' +
-            '          Deployables now ready        ' + '\n' +
-            ' Files created are compiled for upload ' + '\n' +
-            '                                       '
+                '          Deployables now ready        ' + '\n' +
+                ' Files created are compiled for upload '
         )
     );
+});
+
+// B1.1.1 - fire up webserver
+
+gulp.task('webserver2', ['stripjasmine'], function() {
+    console.log(
+        chalk.black.bgCyan.bold(
+                ' Deployables server starting '
+        )
+    );
+    gp.connect.server({
+        root: 'site/compiled',
+        livereload: true,
+        port: 8086
+    });
+});
+
+// B1.1.1.1 - Strip Jasmine
+
+gulp.task('stripjasmine', function() {
+    console.log(
+        chalk.white.bgRed.bold(
+            ' Stripping jasmine from deployables '
+        )
+    );
+    var pagestrip = glob.sync('./site/compiled/**/*.html');
+    gulp.src(pagestrip)
+        .pipe(gp.htmlReplace({keepUnassigned: false}))
+        .pipe(gulp.dest('./site/compiled/'));
 });

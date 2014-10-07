@@ -1,0 +1,22 @@
+mixin productTileMaster()
+
+    .default-tile.product-tile
+        .product-tile-image
+            img(src="http://lorempixel.com/300/300/abstract", alt="...")
+        .product-tile-name
+            h3 Product Name
+        .product-tile-description
+            p
+                | Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+        .product-tile-actions.row
+            .btn-group-vertical.col-xs-12.space-btm
+                a.btn.btn-primary(href="#", role="button")
+                    i.glyphicon.glyphicon-list-alt
+                    | View full details
+            .btn-group-vertical.col-xs-12
+                a.btn.btn-default(href="#", role="button")
+                    i.glyphicon.glyphicon-heart
+                    | Add to wishlist
+                a.btn.btn-success(href="#", role="button")
+                    i.glyphicon.glyphicon-plus
+                    | Add to cart

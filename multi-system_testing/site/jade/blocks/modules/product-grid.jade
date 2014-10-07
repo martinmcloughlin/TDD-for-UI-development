@@ -1,18 +1,20 @@
 mixin productGrid(count, layoutitems)
 
-    .row
+    .row.product-tile-grid
 
         - var ItemCounter = 0;
         - var newNumber = 12/layoutitems;
-        - var newClass = "col-md-" + newNumber;
 
         - for (var i = 0; i < count; ++i) {
             - ItemCounter++;
+
             if ItemCounter == layoutitems
-                div(class="col-md-#{newNumber} col-xs-12 last")
-                    p test LAST
+                div(class="col-md-#{newNumber} col-sm-6 col-xs-12")
+                    +productTileMaster()
                 - ItemCounter = 0;
+
             else
-                div(class="col-md-#{newNumber} col-xs-12")
-                    p test NORM
+                div(class="col-md-#{newNumber} col-sm-6 col-xs-12")
+                    +productTileMaster()
+
         - }

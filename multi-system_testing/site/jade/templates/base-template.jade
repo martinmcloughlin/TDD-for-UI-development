@@ -23,12 +23,18 @@ head
     body
         include ../blocks/site-level/old-ie-warn
         #wrapper.container
+            +mainNav()
             .row
                 .col-xs-12
-                    +mainNav()
-            .row
-                .col-xs-12
-                    span crumbs
+                    ol.breadcrumb
+                        li
+                            a(href="#") Home
+                        li
+                            a(href="#") Category
+                        li
+                            a.active(href="#") Listing
+                    
+
 
 
             block structure

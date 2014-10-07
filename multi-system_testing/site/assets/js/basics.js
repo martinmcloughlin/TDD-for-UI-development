@@ -4,4 +4,4 @@
 
 var d = new Date();
 var nd = d.getDate();
-var mmx = "hi";
+var mmx = "test";
