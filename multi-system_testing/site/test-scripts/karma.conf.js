@@ -29,7 +29,8 @@ module.exports = function(config) {
 
         coverageReporter: {
             type : 'html',
-            dir : 'coverage/'
+            dir : 'coverage/',
+            subdir: '.'
         },
 
         // list of files / patterns to exclude
@@ -47,9 +48,7 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         browsers: [
-            'Chrome',
-            'Firefox',
-            'Safari'
+            'Chrome'
         ],
 
         // Which plugins to enable
