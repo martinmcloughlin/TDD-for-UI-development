@@ -6,7 +6,7 @@ casper.test.begin('testing other html contains stuff', 1, function (test) {
         test.assertTitle('page 2');
     });
 
-    casper.run(function() {
+    casper.run(function () {
         test.done();
     });
 });

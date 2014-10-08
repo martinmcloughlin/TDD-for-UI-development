@@ -126,12 +126,14 @@ gulp.task('caspertest',/* ['uncssit'], */ ['sassy'],  function () {
 });
 
 // A3.2 Karma runner
+// - set to run once as adds overhead when in watch mode
+// - jasmine in browser runs as live
 
 gulp.task('karmarun', function (done) {
     return gulp.src('./idontexist')
         .pipe(gp.karma({
             configFile: './site/test-scripts/karma.conf.js',
-            action: 'watch'
+            action: 'run'
         }));
 });
 

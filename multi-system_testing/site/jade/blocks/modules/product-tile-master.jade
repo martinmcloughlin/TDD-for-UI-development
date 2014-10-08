@@ -1,4 +1,6 @@
-mixin productTileMaster()
+mixin productTileMaster(wishlist)
+
+    - wishlist = wishlist || false;
 
     .default-tile.product-tile
         .product-tile-image
@@ -14,9 +16,11 @@ mixin productTileMaster()
                     i.glyphicon.glyphicon-list-alt
                     | View full details
             .btn-group-vertical.col-xs-12
+                - if (wishlist) {
                 a.btn.btn-default(href="#", role="button")
                     i.glyphicon.glyphicon-heart
                     | Add to wishlist
+                - }
                 a.btn.btn-success(href="#", role="button")
                     i.glyphicon.glyphicon-plus
                     | Add to cart

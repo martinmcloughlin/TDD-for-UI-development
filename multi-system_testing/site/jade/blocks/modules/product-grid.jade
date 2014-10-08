@@ -1,4 +1,4 @@
-mixin productGrid(count, layoutitems)
+mixin productGrid(count, layoutitems, wishlist)
 
     .row.product-tile-grid
 
@@ -10,11 +10,11 @@ mixin productGrid(count, layoutitems)
 
             if ItemCounter == layoutitems
                 div(class="col-md-#{newNumber} col-sm-6 col-xs-12")
-                    +productTileMaster()
+                    +productTileMaster(wishlist)
                 - ItemCounter = 0;
 
             else
                 div(class="col-md-#{newNumber} col-sm-6 col-xs-12")
-                    +productTileMaster()
+                    +productTileMaster(wishlist)
 
         - }
