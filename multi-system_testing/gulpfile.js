@@ -95,9 +95,9 @@ gulp.task('tojsonjasmine', function () {
 
 });
 
-// A3 - CASPER TESTS
+// A3 - CODE TESTS
 
-// trigger the Casper tests
+// A3.1 trigger the Casper tests
 
 gulp.task('caspertest',/* ['uncssit'], */ ['sassy'],  function () {
     var tests = glob.sync('./site/test-scripts/casper/*.js');
@@ -123,6 +123,16 @@ gulp.task('caspertest',/* ['uncssit'], */ ['sassy'],  function () {
             );
         }
     });
+});
+
+// A3.2 Karma runner
+
+gulp.task('karmarun', function (done) {
+    return gulp.src('./idontexist')
+        .pipe(gp.karma({
+            configFile: './site/test-scripts/karma.conf.js',
+            action: 'watch'
+        }));
 });
 
 
@@ -233,14 +243,6 @@ gulp.task('uploader',['deployable'], function () {
             );
         });
 
-});
-// KARMA RUNNER
-gulp.task('karmarun', function (done) {
-    return gulp.src('./idontexist')
-        .pipe(gp.karma({
-            configFile: './site/test-scripts/karma.conf.js',
-            action: 'watch'
-        }));
 });
 
 // B1.1 - fire 'deployables' tasks
