@@ -1,1 +1,1 @@
-var d=new Date,nd=d.getDate(),mmx="test";
+thirdNewTest={"var":d=new Date,innertestOne:function(){var t=d.getDate();return t},innertestTwo:function(){var t="test";return t}};

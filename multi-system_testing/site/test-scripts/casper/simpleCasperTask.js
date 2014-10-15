@@ -5,7 +5,7 @@
 casper.test.begin('testing  contains stuff', 5, function (test) {
     casper.start('./site/compiled/index.html', function () {
         test.assertTitle('title');
-        test.assertExists('.breadcrumb');
+        test.not.assertExists('.breadcrumb');
         test.assertExists('.navbar');
         test.assertExists('.navbar-toggle');
     });
